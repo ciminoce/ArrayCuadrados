@@ -38,13 +38,13 @@
             toolStripSeparator2 = new ToolStripSeparator();
             tsbSalir = new ToolStripButton();
             panel1 = new Panel();
+            txtCantidad = new TextBox();
+            label1 = new Label();
             panel2 = new Panel();
             dgvDatos = new DataGridView();
             colLado = new DataGridViewTextBoxColumn();
             colSuperficie = new DataGridViewTextBoxColumn();
             colPerimetro = new DataGridViewTextBoxColumn();
-            label1 = new Label();
-            txtCantidad = new TextBox();
             toolStrip1.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -144,6 +144,24 @@
             panel1.Size = new Size(800, 53);
             panel1.TabIndex = 1;
             // 
+            // txtCantidad
+            // 
+            txtCantidad.Enabled = false;
+            txtCantidad.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtCantidad.Location = new Point(128, 14);
+            txtCantidad.Name = "txtCantidad";
+            txtCantidad.Size = new Size(100, 23);
+            txtCantidad.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(16, 17);
+            label1.Name = "label1";
+            label1.Size = new Size(106, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Cantidad registros:";
+            // 
             // panel2
             // 
             panel2.Controls.Add(dgvDatos);
@@ -191,24 +209,6 @@
             colPerimetro.Name = "colPerimetro";
             colPerimetro.ReadOnly = true;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(16, 17);
-            label1.Name = "label1";
-            label1.Size = new Size(106, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Cantidad registros:";
-            // 
-            // txtCantidad
-            // 
-            txtCantidad.Enabled = false;
-            txtCantidad.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            txtCantidad.Location = new Point(128, 14);
-            txtCantidad.Name = "txtCantidad";
-            txtCantidad.Size = new Size(100, 23);
-            txtCantidad.TabIndex = 1;
-            // 
             // frmPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -219,6 +219,7 @@
             Controls.Add(toolStrip1);
             Name = "frmPrincipal";
             Text = "frmPrincipal";
+            Load += frmPrincipal_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             panel1.ResumeLayout(false);

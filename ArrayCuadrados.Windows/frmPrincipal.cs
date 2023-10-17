@@ -6,6 +6,7 @@ namespace ArrayCuadrados.Windows
     public partial class frmPrincipal : Form
     {
         private RepositorioDeCuadrados repo;
+        private List<Cuadrado> lista;
         public frmPrincipal()
         {
             InitializeComponent();
@@ -103,7 +104,9 @@ namespace ArrayCuadrados.Windows
                 return;
             }
             var filaSeleccionada = dgvDatos.SelectedRows[0];
+           
             Cuadrado cuadrado = (Cuadrado)filaSeleccionada.Tag;
+            int ladoAnterior = cuadrado.GetLado();
             frmCuadradoAE frm = new frmCuadradoAE() { Text = "Editar Cuadrado" };
             frm.SetCuadrado(cuadrado);
             DialogResult dr = frm.ShowDialog(this);
@@ -112,10 +115,31 @@ namespace ArrayCuadrados.Windows
                 return;
             }
             cuadrado = frm.GetCuadrado();
+            repo.Editar(ladoAnterior, cuadrado);
             SetearFila(filaSeleccionada, cuadrado);
             MessageBox.Show("Registro editado", "Mensaje", MessageBoxButtons.OK,
 MessageBoxIcon.Information);
 
+        }
+
+        private void frmPrincipal_Load(object sender, EventArgs e)
+        {
+            if (repo.GetCantidad()>0)
+            {
+                lista = repo.GetLista();
+                MostrarDatosEnGrilla();
+            }
+        }
+
+        private void MostrarDatosEnGrilla()
+        {
+            dgvDatos.Rows.Clear();
+            foreach (var cuadrado in lista)
+            {
+                DataGridViewRow r = ConstruirFila();
+                SetearFila(r, cuadrado);
+                AgregarFila(r);
+            }
         }
     }
 }
