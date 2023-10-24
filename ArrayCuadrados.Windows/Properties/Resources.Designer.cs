@@ -123,6 +123,16 @@ namespace ArrayCuadrados.Windows.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap numerical_sorting_32px {
+            get {
+                object obj = ResourceManager.GetObject("numerical_sorting_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ok_24px {
             get {
                 object obj = ResourceManager.GetObject("ok_24px", resourceCulture);
@@ -136,6 +146,26 @@ namespace ArrayCuadrados.Windows.Properties {
         internal static System.Drawing.Bitmap refresh_32px {
             get {
                 object obj = ResourceManager.GetObject("refresh_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap reversed_numerical_sorting_32px {
+            get {
+                object obj = ResourceManager.GetObject("reversed_numerical_sorting_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sorting_arrows_32px {
+            get {
+                object obj = ResourceManager.GetObject("sorting_arrows_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -36,6 +36,10 @@
             tsbFiltro = new ToolStripButton();
             tsbActualizar = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
+            tsbOrdenar = new ToolStripDropDownButton();
+            ascendenteToolStripMenuItem = new ToolStripMenuItem();
+            descendenteToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator3 = new ToolStripSeparator();
             tsbSalir = new ToolStripButton();
             panel1 = new Panel();
             txtCantidad = new TextBox();
@@ -53,7 +57,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbNuevo, tsbBorrar, tsbEditar, toolStripSeparator1, tsbFiltro, tsbActualizar, toolStripSeparator2, tsbSalir });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tsbNuevo, tsbBorrar, tsbEditar, toolStripSeparator1, tsbFiltro, tsbActualizar, toolStripSeparator2, tsbOrdenar, toolStripSeparator3, tsbSalir });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 54);
@@ -107,6 +111,7 @@
             tsbFiltro.Size = new Size(41, 51);
             tsbFiltro.Text = "Filtrar";
             tsbFiltro.TextImageRelation = TextImageRelation.ImageAboveText;
+            tsbFiltro.Click += tsbFiltro_Click;
             // 
             // tsbActualizar
             // 
@@ -117,11 +122,44 @@
             tsbActualizar.Size = new Size(63, 51);
             tsbActualizar.Text = "Actualizar";
             tsbActualizar.TextImageRelation = TextImageRelation.ImageAboveText;
+            tsbActualizar.Click += tsbActualizar_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
             toolStripSeparator2.Size = new Size(6, 54);
+            // 
+            // tsbOrdenar
+            // 
+            tsbOrdenar.DropDownItems.AddRange(new ToolStripItem[] { ascendenteToolStripMenuItem, descendenteToolStripMenuItem });
+            tsbOrdenar.Image = Properties.Resources.sorting_arrows_32px;
+            tsbOrdenar.ImageScaling = ToolStripItemImageScaling.None;
+            tsbOrdenar.ImageTransparentColor = Color.Magenta;
+            tsbOrdenar.Name = "tsbOrdenar";
+            tsbOrdenar.Size = new Size(63, 51);
+            tsbOrdenar.Text = "Ordenar";
+            tsbOrdenar.TextImageRelation = TextImageRelation.ImageAboveText;
+            // 
+            // ascendenteToolStripMenuItem
+            // 
+            ascendenteToolStripMenuItem.Image = Properties.Resources.numerical_sorting_32px;
+            ascendenteToolStripMenuItem.Name = "ascendenteToolStripMenuItem";
+            ascendenteToolStripMenuItem.Size = new Size(180, 22);
+            ascendenteToolStripMenuItem.Text = "Ascendente";
+            ascendenteToolStripMenuItem.Click += ascendenteToolStripMenuItem_Click;
+            // 
+            // descendenteToolStripMenuItem
+            // 
+            descendenteToolStripMenuItem.Image = Properties.Resources.reversed_numerical_sorting_32px;
+            descendenteToolStripMenuItem.Name = "descendenteToolStripMenuItem";
+            descendenteToolStripMenuItem.Size = new Size(180, 22);
+            descendenteToolStripMenuItem.Text = "Descendente";
+            descendenteToolStripMenuItem.Click += descendenteToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(6, 54);
             // 
             // tsbSalir
             // 
@@ -194,6 +232,7 @@
             colLado.HeaderText = "Lado";
             colLado.Name = "colLado";
             colLado.ReadOnly = true;
+            colLado.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // colSuperficie
             // 
@@ -201,6 +240,7 @@
             colSuperficie.HeaderText = "Superficie";
             colSuperficie.Name = "colSuperficie";
             colSuperficie.ReadOnly = true;
+            colSuperficie.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // colPerimetro
             // 
@@ -208,6 +248,7 @@
             colPerimetro.HeaderText = "Perímetro";
             colPerimetro.Name = "colPerimetro";
             colPerimetro.ReadOnly = true;
+            colPerimetro.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // frmPrincipal
             // 
@@ -244,10 +285,14 @@
         private ToolStripButton tsbSalir;
         private Panel panel2;
         private DataGridView dgvDatos;
+        private TextBox txtCantidad;
+        private Label label1;
+        private ToolStripDropDownButton tsbOrdenar;
+        private ToolStripMenuItem ascendenteToolStripMenuItem;
+        private ToolStripMenuItem descendenteToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator3;
         private DataGridViewTextBoxColumn colLado;
         private DataGridViewTextBoxColumn colSuperficie;
         private DataGridViewTextBoxColumn colPerimetro;
-        private TextBox txtCantidad;
-        private Label label1;
     }
 }

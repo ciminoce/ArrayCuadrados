@@ -1,7 +1,7 @@
 ﻿namespace ArrayCuadrados.Entidades
 {
     //Esta es la clase
-    public class Cuadrado
+    public class Cuadrado:ICloneable
     {
         //Atributos de la clase
         private const int _CantidadLados = 4;
@@ -42,6 +42,9 @@
         public double GetPerimetro() => _CantidadLados * _medidaLado;
         public double GetSuperficie()=>Math.Pow(_medidaLado, 2);
 
-
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

@@ -96,8 +96,13 @@ namespace ArrayCuadrados.Datos
         /// Metodo para informar la cantidad de datos del repo
         /// </summary>
         /// <returns></returns>
-        public int GetCantidad()
+        public int GetCantidad(int valorFiltro=0)
         {
+            if (valorFiltro>0)
+            {
+                return listaCuadrados
+                    .Count(c => c.GetLado() >= valorFiltro);
+            }
             return listaCuadrados.Count;
         }
         public void Borrar(Cuadrado cuadradoBorrar)
@@ -122,6 +127,38 @@ namespace ArrayCuadrados.Datos
             File.Delete(_archivo);
             File.Move(_archivoCopia, _archivo);
             listaCuadrados.Remove(cuadradoBorrar);
+        }
+
+        public List<Cuadrado> Filtrar(int intValor)
+        {
+            return listaCuadrados
+                .Where(c=>c.GetLado()>=intValor)
+                .ToList();
+        }
+
+        public List<Cuadrado> OrdenarAsc()
+        {
+            return listaCuadrados.OrderBy(c=>c.GetLado()).ToList();
+        }
+
+        public List<Cuadrado> OrdenarDesc()
+        {
+            return listaCuadrados.OrderByDescending(c => c.GetLado()).ToList();
+
+        }
+
+        public bool Existe(Cuadrado cuadrado)
+        {
+            listaCuadrados.Clear();
+            LeerDatos();
+            foreach (var itemCuadrado in listaCuadrados)
+            {
+                if (itemCuadrado.GetLado() == cuadrado.GetLado())
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -7,11 +7,27 @@ namespace ArrayCuadrados.Windows
     {
         private RepositorioDeCuadrados repo;
         private List<Cuadrado> lista;
+        int intValor;
+        bool filterOn = false;
         public frmPrincipal()
         {
             InitializeComponent();
             repo = new RepositorioDeCuadrados();
-            txtCantidad.Text = repo.GetCantidad().ToString();
+            ActualizarCantidadRegistros();
+        }
+
+        private void ActualizarCantidadRegistros()
+        {
+            if (intValor > 0)
+            {
+                txtCantidad.Text = repo.GetCantidad(intValor).ToString();
+
+            }
+            else
+            {
+                txtCantidad.Text = repo.GetCantidad().ToString();
+
+            }
         }
 
         private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -33,16 +49,25 @@ namespace ArrayCuadrados.Windows
                 return;
             }
             Cuadrado cuadrado = frm.GetCuadrado();
-            repo.Agregar(cuadrado);
-            txtCantidad.Text = repo.GetCantidad().ToString();
+            if (!repo.Existe(cuadrado))
+            {
+                repo.Agregar(cuadrado);
+                txtCantidad.Text = repo.GetCantidad().ToString();
 
-            DataGridViewRow r = ConstruirFila();
-            SetearFila(r, cuadrado);
-            AgregarFila(r);
+                DataGridViewRow r = ConstruirFila();
+                SetearFila(r, cuadrado);
+                AgregarFila(r);
 
-            MessageBox.Show("Registro agregado", "Mensaje", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+                MessageBox.Show("Registro agregado", "Mensaje", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
 
+            }
+            else
+            {
+                MessageBox.Show("Registro existente", "Error", MessageBoxButtons.OK,
+    MessageBoxIcon.Error);
+
+            }
         }
 
         private void AgregarFila(DataGridViewRow r)
@@ -104,9 +129,11 @@ namespace ArrayCuadrados.Windows
                 return;
             }
             var filaSeleccionada = dgvDatos.SelectedRows[0];
-           
+
             Cuadrado cuadrado = (Cuadrado)filaSeleccionada.Tag;
+            Cuadrado cuadradoCopia=(Cuadrado)cuadrado.Clone();
             int ladoAnterior = cuadrado.GetLado();
+
             frmCuadradoAE frm = new frmCuadradoAE() { Text = "Editar Cuadrado" };
             frm.SetCuadrado(cuadrado);
             DialogResult dr = frm.ShowDialog(this);
@@ -115,16 +142,27 @@ namespace ArrayCuadrados.Windows
                 return;
             }
             cuadrado = frm.GetCuadrado();
-            repo.Editar(ladoAnterior, cuadrado);
-            SetearFila(filaSeleccionada, cuadrado);
-            MessageBox.Show("Registro editado", "Mensaje", MessageBoxButtons.OK,
-MessageBoxIcon.Information);
+            if (!repo.Existe(cuadrado))
+            {
+                repo.Editar(ladoAnterior, cuadrado);
+                SetearFila(filaSeleccionada, cuadrado);
+                MessageBox.Show("Registro editado", "Mensaje", MessageBoxButtons.OK,
+    MessageBoxIcon.Information);
+
+            }
+            else
+            {
+                SetearFila(filaSeleccionada, cuadradoCopia);
+                MessageBox.Show("Registro existente", "Error", MessageBoxButtons.OK,
+MessageBoxIcon.Error);
+
+            }
 
         }
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            if (repo.GetCantidad()>0)
+            if (repo.GetCantidad() > 0)
             {
                 lista = repo.GetLista();
                 MostrarDatosEnGrilla();
@@ -140,6 +178,64 @@ MessageBoxIcon.Information);
                 SetearFila(r, cuadrado);
                 AgregarFila(r);
             }
+        }
+
+        private void tsbFiltro_Click(object sender, EventArgs e)
+        {
+            if (!filterOn)
+            {
+                var stringValor = Microsoft.VisualBasic.Interaction.InputBox(
+            "Ingrese el valor del lado a filtrar",
+            "Filtrar por Mayor o Igual",
+            "0", 400, 400);
+                if (!int.TryParse(stringValor, out intValor))
+                {
+                    return;
+                }
+                if (intValor <= 0)
+                {
+                    return;
+                }
+                lista = repo.Filtrar(intValor);
+                tsbFiltro.BackColor = Color.Orange;
+                filterOn = true;
+                MostrarDatosEnGrilla();
+                ActualizarCantidadRegistros();
+
+            }
+            else
+            {
+                MessageBox.Show("Filtro Aplicado!!!\nDebe actualizar la grilla",
+                    "Advertencia",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
+        private void tsbActualizar_Click(object sender, EventArgs e)
+        {
+            intValor = 0;
+            filterOn = false;
+            tsbFiltro.BackColor = SystemColors.Control;
+            lista = repo.GetLista();
+            MostrarDatosEnGrilla();
+            ActualizarCantidadRegistros();
+        }
+
+        private void ascendenteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lista = repo.OrdenarAsc();
+            MostrarDatosEnGrilla();
+            ActualizarCantidadRegistros();
+
+        }
+
+        private void descendenteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lista = repo.OrdenarDesc();
+            MostrarDatosEnGrilla();
+            ActualizarCantidadRegistros();
+
         }
     }
 }
