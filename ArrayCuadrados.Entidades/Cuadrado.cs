@@ -6,15 +6,32 @@
         //Atributos de la clase
         private const int _CantidadLados = 4;
         private int _medidaLado;
+        private TipoDeBorde tipoDeBorde;
+
+        public TipoDeBorde TipoDeBorde
+        {
+            get { return tipoDeBorde; }
+            set { tipoDeBorde = value; }
+        }
+
+        private ColorRelleno colorRelleno;
+
+        public ColorRelleno ColorRelleno
+        {
+            get { return colorRelleno; }
+            set { colorRelleno = value; }
+        }
 
         //Constructores
         public Cuadrado()
         {
             
         }
-        public Cuadrado(int MedidaLado) {
+        public Cuadrado(int MedidaLado, TipoDeBorde borde, ColorRelleno color) {
 
             _medidaLado = MedidaLado;
+            TipoDeBorde = borde;
+            ColorRelleno = color;
             //if (MedidaLado>0)
             //{
 

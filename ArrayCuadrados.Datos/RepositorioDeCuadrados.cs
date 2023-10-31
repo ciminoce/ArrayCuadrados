@@ -33,7 +33,7 @@ namespace ArrayCuadrados.Datos
 
             } 
         }
-        public void Editar(int ladoAnterior, Cuadrado cuadradoEditar)
+        public void Editar(Cuadrado cuadradoEnArchivo, Cuadrado cuadradoEditar)
         {
             using (var lector = new StreamReader(_archivo))
             {
@@ -43,7 +43,7 @@ namespace ArrayCuadrados.Datos
                     {
                         string lineaLeida=lector.ReadLine();
                         Cuadrado cuadrado = ConstuirCuadrado(lineaLeida);
-                        if (ladoAnterior!=cuadrado.GetLado())
+                        if (cuadradoEnArchivo.GetLado()!=cuadrado.GetLado())
                         {
                             escritor.WriteLine(lineaLeida);
                         }
@@ -64,7 +64,9 @@ namespace ArrayCuadrados.Datos
             var campos=lineaLeida.Split('|');
             //campos[0]="10"
             int lado = int.Parse(campos[0]);
-            Cuadrado c = new Cuadrado(lado);
+            TipoDeBorde borde =(TipoDeBorde) int.Parse(campos[1]);
+            ColorRelleno color =(ColorRelleno) int.Parse(campos[2]);
+            Cuadrado c = new Cuadrado(lado,borde,color);
             return c;
 
         }
@@ -90,7 +92,7 @@ namespace ArrayCuadrados.Datos
 
         private string ConstruirLinea(Cuadrado cuadrado)
         {
-            return $"{cuadrado.GetLado()}";
+            return $"{cuadrado.GetLado()}|{cuadrado.TipoDeBorde.GetHashCode()}|{cuadrado.ColorRelleno.GetHashCode()}";
         }
         /// <summary>
         /// Metodo para informar la cantidad de datos del repo
@@ -153,7 +155,9 @@ namespace ArrayCuadrados.Datos
             LeerDatos();
             foreach (var itemCuadrado in listaCuadrados)
             {
-                if (itemCuadrado.GetLado() == cuadrado.GetLado())
+                if (itemCuadrado.GetLado() == cuadrado.GetLado() &&
+                    itemCuadrado.ColorRelleno==cuadrado.ColorRelleno && 
+                    itemCuadrado.TipoDeBorde==cuadrado.TipoDeBorde)
                 {
                     return true;
                 }
